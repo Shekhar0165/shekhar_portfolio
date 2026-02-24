@@ -1,0 +1,383 @@
+/* ═══════════════════════════════════════════════════════════════
+   Terminal-Style Portfolio — Core Styles (Fully Responsive)
+   ═══════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+
+:root {
+    --term-bg: #1a1a1a;
+    --term-amber: #FFB300;
+    --term-dim: #888888;
+    --term-green: #00FF00;
+    --term-red: #FF5555;
+    --term-white: #e0e0e0;
+    --term-cyan: #06b6d4;
+    --term-purple: #8b5cf6;
+    --term-font: 'JetBrains Mono', monospace;
+    --term-font-size: 14px;
+    --term-body-pad: 16px 20px;
+}
+
+/* ── Global Reset for Terminal ── */
+html,
+body,
+#root {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    background: var(--term-bg);
+    font-family: var(--term-font);
+    color: var(--term-amber);
+    -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+    background: var(--term-amber);
+    color: var(--term-bg);
+}
+
+/* ── Scanline Overlay ── */
+.terminal-container::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(0deg,
+            rgba(0, 0, 0, 0.03) 0px,
+            rgba(0, 0, 0, 0.03) 1px,
+            transparent 1px,
+            transparent 2px);
+    pointer-events: none;
+    z-index: 999;
+}
+
+/* ── Terminal Chrome (Title Bar) ── */
+.terminal-chrome {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: #0d0d0d;
+    border-bottom: 1px solid #333;
+    user-select: none;
+    flex-shrink: 0;
+}
+
+.terminal-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.terminal-dot--red {
+    background: var(--term-red);
+}
+
+.terminal-dot--yellow {
+    background: var(--term-amber);
+}
+
+.terminal-dot--green {
+    background: var(--term-green);
+}
+
+.terminal-title {
+    flex: 1;
+    text-align: center;
+    color: var(--term-dim);
+    font-size: 13px;
+    font-family: var(--term-font);
+}
+
+/* ── Terminal Body ── */
+.terminal-body {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: var(--term-body-pad);
+    scroll-behavior: smooth;
+}
+
+/* Custom Scrollbar */
+.terminal-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.terminal-body::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.terminal-body::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 3px;
+}
+
+.terminal-body::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* ── Output Lines ── */
+.output-line {
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-size: var(--term-font-size);
+    line-height: 1.6;
+    font-family: var(--term-font);
+    overflow-x: auto;
+}
+
+.output-line--amber {
+    color: var(--term-amber);
+}
+
+.output-line--green {
+    color: var(--term-green);
+}
+
+.output-line--red {
+    color: var(--term-red);
+}
+
+.output-line--dim {
+    color: var(--term-dim);
+}
+
+.output-line--white {
+    color: var(--term-white);
+}
+
+.output-line--cyan {
+    color: var(--term-cyan);
+}
+
+/* ── Blinking Cursor ── */
+@keyframes blink {
+
+    0%,
+    49% {
+        opacity: 1;
+    }
+
+    50%,
+    100% {
+        opacity: 0;
+    }
+}
+
+.cursor-blink {
+    animation: blink 1s step-end infinite;
+    color: var(--term-amber);
+}
+
+/* ── Command Input ── */
+.command-input-wrapper {
+    display: flex;
+    align-items: center;
+    font-size: var(--term-font-size);
+    line-height: 1.6;
+    padding: 0;
+    font-family: var(--term-font);
+    flex-wrap: wrap;
+}
+
+.command-prompt {
+    color: var(--term-green);
+    white-space: nowrap;
+    flex-shrink: 0;
+    user-select: none;
+}
+
+.command-input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--term-amber);
+    font-family: var(--term-font);
+    font-size: var(--term-font-size);
+    flex: 1;
+    caret-color: transparent;
+    padding: 0;
+    margin: 0;
+}
+
+.command-input::placeholder {
+    color: transparent;
+}
+
+/* ── Skill Bar ── */
+.skill-bar {
+    display: inline-block;
+    color: var(--term-green);
+    letter-spacing: -1px;
+}
+
+.skill-bar-empty {
+    color: #333;
+}
+
+/* ── Links inside terminal output ── */
+.term-link {
+    color: var(--term-cyan);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.term-link:hover {
+    color: var(--term-amber);
+}
+
+/* ── Modal (shared by AWS, Project, Contact modals) ── */
+.aws-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+}
+
+.aws-modal {
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 8px;
+    max-width: 900px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 24px;
+    position: relative;
+    font-family: var(--term-font);
+}
+
+.aws-modal-close {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    background: none;
+    border: 1px solid #555;
+    color: var(--term-dim);
+    font-size: 18px;
+    cursor: pointer;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-family: var(--term-font);
+    transition: all 0.2s;
+}
+
+.aws-modal-close:hover {
+    border-color: var(--term-amber);
+    color: var(--term-amber);
+}
+
+/* ── Mobile Quick-Command Buttons ── */
+.mobile-cmd-bar {
+    display: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE BREAKPOINTS
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Tablets (< 768px) ── */
+@media (max-width: 767px) {
+    :root {
+        --term-font-size: 12px;
+        --term-body-pad: 12px 12px;
+    }
+
+    .terminal-chrome {
+        padding: 8px 12px;
+        gap: 6px;
+    }
+
+    .terminal-dot {
+        width: 10px;
+        height: 10px;
+    }
+
+    .terminal-title {
+        font-size: 11px;
+    }
+
+    .aws-modal {
+        padding: 16px;
+        border-radius: 8px;
+        max-height: 80vh;
+    }
+
+    .aws-modal-close {
+        top: 8px;
+        right: 8px;
+        font-size: 16px;
+        padding: 4px 8px;
+    }
+
+    /* Show quick-command buttons on mobile */
+    .mobile-cmd-bar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        padding: 10px 12px;
+        background: #0d0d0d;
+        border-bottom: 1px solid #222;
+        overflow-x: auto;
+        flex-shrink: 0;
+    }
+
+    .mobile-cmd-btn {
+        padding: 5px 10px;
+        font-size: 11px;
+        font-family: var(--term-font);
+        background: #111;
+        border: 1px solid #333;
+        border-radius: 4px;
+        color: var(--term-amber);
+        cursor: pointer;
+        white-space: nowrap;
+        flex-shrink: 0;
+        transition: all 0.15s;
+    }
+
+    .mobile-cmd-btn:active {
+        background: var(--term-amber);
+        color: var(--term-bg);
+    }
+}
+
+/* ── Small phones (< 400px) ── */
+@media (max-width: 399px) {
+    :root {
+        --term-font-size: 11px;
+        --term-body-pad: 8px 8px;
+    }
+
+    .terminal-chrome {
+        padding: 6px 8px;
+    }
+
+    .terminal-title {
+        font-size: 10px;
+    }
+
+    .command-prompt {
+        font-size: 10px;
+    }
+
+    .mobile-cmd-bar {
+        gap: 4px;
+        padding: 6px 8px;
+    }
+
+    .mobile-cmd-btn {
+        padding: 4px 8px;
+        font-size: 10px;
+    }
+}
